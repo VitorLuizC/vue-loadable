@@ -1,0 +1,34 @@
+{
+  "name": "vue-mixin-loadable",
+  "version": "0.1.0",
+  "description": "Adds loading state when running load method / param.",
+  "main": "dist/vue-mixin-loadable",
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitorLuizC/vue-mixin-loadable.git"
+  },
+  "keywords": [
+    "vue",
+    "vue-mixin",
+    "loadable",
+    "load",
+    "vue-loadable"
+  ],
+  "author": {
+    "url": "https://vitorluizc.github.io/",
+    "name": "Vitor Cavalcanti",
+    "email": "vitorluizc@outlook.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VitorLuizC/vue-mixin-loadable/issues"
+  },
+  "homepage": "https://github.com/VitorLuizC/vue-mixin-loadable#readme",
+  "devDependencies": {
+    "poi": "^9.4.4",
+    "standard": "^10.0.3"
+  }
+}
