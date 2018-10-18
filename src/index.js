@@ -1,3 +1,5 @@
+import loadable from './loadable';
+
 /**
  * Load function.
  * @typedef {function():Promise.<*>} Load
@@ -33,4 +35,5 @@ const Loadable = (load = DEFAULT_LOAD) => ({
   }
 })
 
+export { loadable };
 export default Loadable
