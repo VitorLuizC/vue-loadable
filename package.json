@@ -2,8 +2,14 @@
   "name": "vue-loadable",
   "version": "0.1.0",
   "description": "Adds loading state when running load method / param.",
+  "cdn": "dist/vue-loadable.umd.js",
+  "main": "dist/vue-loadable.js",
+  "unpkg": "dist/vue-loadable.umd.js",
+  "module": "dist/vue-loadable.mjs",
+  "jsdelivr": "dist/vue-loadable.umd.js",
+  "umd:main": "dist/vue-loadable.umd.js",
   "scripts": {
-    "test": "standard"
+    "build": "bili"
   },
   "repository": {
     "type": "git",
@@ -27,7 +33,6 @@
   },
   "homepage": "https://github.com/VitorLuizC/vue-loadable#readme",
   "devDependencies": {
-    "poi": "^9.4.4",
-    "standard": "^10.0.3"
+    "bili": "^4.1.0"
   }
 }
