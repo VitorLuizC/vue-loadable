@@ -7,15 +7,15 @@
  */
 export default async function callWithHooks <T> (
   call: () => T | Promise<T>,
-  onDone: (value: T) => void,
-  onError: (error: Error) => void,
+  onDone: () => void,
+  onError: () => void = onDone,
 ): Promise<T> {
   try {
     const value = await call();
-    onDone(value);
+    onDone();
     return Promise.resolve(value);
   } catch (error) {
-    onError(error as Error);
+    onError();
     return Promise.reject(error);
   }
 }
