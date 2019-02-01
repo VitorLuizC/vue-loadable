@@ -11,7 +11,7 @@ export default async function callWithHooks <T> (
   onError: (error: Error) => void,
 ): Promise<T> {
   try {
-    const value = await Promise.resolve(call());
+    const value = await call();
     onDone(value);
     return Promise.resolve(value);
   } catch (error) {
