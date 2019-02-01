@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "es2018",
+    "lib": ["es2018", "dom"],
+
+    // Module configuration.
+    "module": "es2015",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+
+    // Declaration configuration.
+    "declaration": true,
+    "declarationDir": "types/"
+  }
+}

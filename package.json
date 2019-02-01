@@ -33,6 +33,9 @@
   },
   "homepage": "https://github.com/VitorLuizC/vue-loadable#readme",
   "devDependencies": {
-    "bili": "^4.1.0"
+    "bili": "^4.1.0",
+    "rollup-plugin-typescript2": "^0.19.2",
+    "typescript": "^3.2.4",
+    "vue": "^2.5.22"
   }
 }

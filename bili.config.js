@@ -2,13 +2,18 @@
  * Bili's configuration object.
  * @type {import('bili').Config}
  */
-const configuration = {
+module.exports = {
   banner: true,
-  input: 'src/vue-loadable.js',
+  input: 'src/vue-loadable.ts',
   output: {
     format: ['es', 'cjs', 'umd', 'umd-min'],
     moduleName: 'VueLoadable'
+  },
+  plugins: {
+    'typescript2': {
+      clean: true,
+      verbosity: 0,
+      useTsconfigDeclarationDir: true,
+    }
   }
-}
-
-module.exports = configuration
+};
