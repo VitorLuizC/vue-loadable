@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Adds loading state when running load method / param.",
   "cdn": "dist/vue-loadable.umd.js",
+  "types": "types/vue-loadable.d.ts",
   "main": "dist/vue-loadable.js",
   "unpkg": "dist/vue-loadable.umd.js",
   "module": "dist/vue-loadable.mjs",

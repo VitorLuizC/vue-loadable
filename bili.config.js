@@ -3,8 +3,9 @@
  * @type {import('bili').Config}
  */
 module.exports = {
-  banner: true,
   input: 'src/vue-loadable.ts',
+  banner: true,
+  externals: ['vue'],
   output: {
     format: ['es', 'cjs', 'umd', 'umd-min'],
     moduleName: 'VueLoadable'
