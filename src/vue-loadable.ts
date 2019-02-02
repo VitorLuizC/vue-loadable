@@ -1,12 +1,9 @@
-import { VueConstructor } from 'vue';
+import Vue, { VueConstructor } from 'vue';
 import callWithHooks from './callWithHooks';
-import Loadable from './Loadable';
+import Loadable, { LoadableInstance } from './Loadable';
 
 declare module 'vue/types/vue' {
-  interface Vue {
-    $isLoading(state?: string): boolean;
-    $isLoadingAny(): boolean;
-  }
+  interface Vue extends Pick<LoadableInstance, '$isLoading' | '$isLoadingAny'> {}
 }
 
 export default {
@@ -15,12 +12,12 @@ export default {
   }
 };
 
-export function loadable <Return, Params extends []> (
-  this: any,
+export function loadable <Return, Params extends any[], Instance extends Vue> (
+  this: LoadableInstance<Instance>,
   λ: (...params: Params) => Return | Promise<Return>,
   state: string = 'generic',
-): (this: any, ...args: Params) => Promise<Return> {
-  return function (this: any) {
+): (this: LoadableInstance<Instance>, ...params: Params) => Promise<Return> {
+  return function (this: LoadableInstance<Instance>) {
     const params = arguments as unknown as Params;
 
     this.$_SET_LOADING(state);

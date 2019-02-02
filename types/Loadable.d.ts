@@ -1,10 +1,13 @@
 import Vue from 'vue';
-declare const Loadable: import("vue").VueConstructor<{
+export declare type LoadableInstance<V extends Vue = Vue> = V & LoadableState & LoadableMethods;
+export declare type LoadableState = {
     $_LOADING_STATES: Record<string, number>;
-} & {
-    $isLoading(state?: string): boolean;
-    $isLoadingAny(): boolean;
-    $_SET_LOADING(state: string): void;
-    $_UNSET_LOADING(state: string): void;
-} & Record<never, any> & Vue>;
+};
+export declare type LoadableMethods = {
+    $isLoading(this: LoadableInstance, state?: string): boolean;
+    $isLoadingAny(this: LoadableInstance): boolean;
+    $_SET_LOADING(this: LoadableInstance, state: string): void;
+    $_UNSET_LOADING(this: LoadableInstance, state: string): void;
+};
+declare const Loadable: import("vue").VueConstructor<LoadableState & LoadableMethods & Record<never, any> & Vue>;
 export default Loadable;
