@@ -3,7 +3,10 @@ import callWithHooks from './callWithHooks';
 import Loadable, { LoadableInstance } from './Loadable';
 
 declare module 'vue/types/vue' {
-  interface Vue extends Pick<LoadableInstance, '$isLoading' | '$isLoadingAny'> {}
+  interface Vue {
+    $isLoading (state?: string): boolean;
+    $isLoadingAny (): boolean;
+  }
 }
 
 export default {
@@ -12,12 +15,11 @@ export default {
   }
 };
 
-export function loadable <Return, Params extends any[], Instance extends Vue> (
-  this: LoadableInstance<Instance>,
-  λ: (...params: Params) => Return | Promise<Return>,
+export function loadable <Return, Params extends any[]> (
+  λ: (this: LoadableInstance, ...params: Params) => Return | Promise<Return>,
   state: string = 'generic',
-): (this: LoadableInstance<Instance>, ...params: Params) => Promise<Return> {
-  return function (this: LoadableInstance<Instance>) {
+): (this: LoadableInstance, ...params: Params) => Promise<Return> {
+  return function () {
     const params = arguments as unknown as Params;
 
     this.$_SET_LOADING(state);
@@ -26,5 +28,5 @@ export function loadable <Return, Params extends any[], Instance extends Vue> (
       () => λ.apply(this, params),
       () => this.$_UNSET_LOADING(state),
     );
-  }
+  };
 }

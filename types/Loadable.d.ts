@@ -1,5 +1,5 @@
 import Vue from 'vue';
-export declare type LoadableInstance<V extends Vue = Vue> = V & LoadableState & LoadableMethods;
+export declare type LoadableInstance = Vue & LoadableState & LoadableMethods;
 export declare type LoadableState = {
     $_LOADING_STATES: Record<string, number>;
 };

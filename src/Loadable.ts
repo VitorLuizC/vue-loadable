@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-export type LoadableInstance <V extends Vue = Vue> = V & LoadableState & LoadableMethods;
+export type LoadableInstance = Vue & LoadableState & LoadableMethods;
 
 export type LoadableState = {
   $_LOADING_STATES: Record<string, number>;
