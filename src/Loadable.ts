@@ -3,7 +3,7 @@ import Vue from 'vue';
 export type LoadableInstance = Vue & LoadableState & LoadableMethods;
 
 export type LoadableState = {
-  $_LOADING_STATES: Record<string, number>;
+  LOADING_STATES: Record<string, number>;
 };
 
 export type LoadableMethods = {
@@ -16,27 +16,27 @@ export type LoadableMethods = {
 const Loadable = Vue.extend({
   data (): LoadableState {
     return {
-      $_LOADING_STATES: Object.create(null)
+      LOADING_STATES: Object.create(null)
     };
   },
   methods: {
     $isLoading (state = 'generic') {
-      const value = this.$_LOADING_STATES[state];
+      const value = this.LOADING_STATES[state];
       return !!value && value > 0;
     },
 
     $isLoadingAny () {
-      return Object.keys(this.$_LOADING_STATES).some(this.$isLoading);
+      return Object.keys(this.LOADING_STATES).some(this.$isLoading);
     },
 
     $_SET_LOADING (state) {
-      const value = this.$_LOADING_STATES[state];
-      this.$set(this.$_LOADING_STATES, state, value ? value + 1 : 1);
+      const value = this.LOADING_STATES[state];
+      this.$set(this.LOADING_STATES, state, value ? value + 1 : 1);
     },
 
     $_UNSET_LOADING (state) {
-      const value = this.$_LOADING_STATES[state];
-      this.$set(this.$_LOADING_STATES, state, value ? value - 1 : 0);
+      const value = this.LOADING_STATES[state];
+      this.$set(this.LOADING_STATES, state, value ? value - 1 : 0);
     }
   } as LoadableMethods
 });
