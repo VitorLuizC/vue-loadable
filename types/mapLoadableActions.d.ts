@@ -1,3 +1,3 @@
-import { mapActions } from 'vuex';
-declare const mapLoadableActions: typeof mapActions;
+import { MapActions } from './mapActions';
+declare const mapLoadableActions: MapActions;
 export default mapLoadableActions;
