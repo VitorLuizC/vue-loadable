@@ -9,6 +9,12 @@ declare module 'vue/types/vue' {
 export { LoadableMixin };
 export { default as loadable } from './loadable';
 export { default as mapLoadableActions } from './mapLoadableActions';
+/**
+ * Installs LoadableMixin globally.
+ * @example ```js
+ * Vue.use(install)```
+ * @param Vue - The Vue constructor.
+ */
 export declare function install(Vue: VueConstructor): void;
 declare const _default: {
     install: typeof install;

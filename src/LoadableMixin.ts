@@ -13,6 +13,18 @@ export type LoadableMixinMethods = {
   $_UNSET_LOADING (this: LoadableMixinInstance, state: string): void;
 };
 
+/**
+ * A mixin which adds loading states and helpers to Vue components.
+ * @example ```js
+ * Vue.component('SignUpForm', {
+ *   mixins: [ LoadableMixin ],
+ *   ...,
+ *   mounted () {
+ *     if (this.$isLoadingAny())
+ *       console.log('Loading...');
+ *   }
+ * })```
+ */
 const LoadableMixin = Vue.extend({
   data (): LoadableMixinState {
     return {

@@ -14,6 +14,12 @@ export { default as loadable } from './loadable';
 
 export { default as mapLoadableActions } from './mapLoadableActions';
 
+/**
+ * Installs LoadableMixin globally.
+ * @example ```js
+ * Vue.use(install)```
+ * @param Vue - The Vue constructor.
+ */
 export function install (Vue: VueConstructor): void {
   Vue.mixin(LoadableMixin);
 }

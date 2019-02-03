@@ -9,5 +9,17 @@ export declare type LoadableMixinMethods = {
     $_SET_LOADING(this: LoadableMixinInstance, state: string): void;
     $_UNSET_LOADING(this: LoadableMixinInstance, state: string): void;
 };
+/**
+ * A mixin which adds loading states and helpers to Vue components.
+ * @example ```js
+ * Vue.component('SignUpForm', {
+ *   mixins: [ LoadableMixin ],
+ *   ...,
+ *   mounted () {
+ *     if (this.$isLoadingAny())
+ *       console.log('Loading...');
+ *   }
+ * })```
+ */
 declare const LoadableMixin: import("vue").VueConstructor<LoadableMixinState & LoadableMixinMethods & Record<never, any> & Vue>;
 export default LoadableMixin;
