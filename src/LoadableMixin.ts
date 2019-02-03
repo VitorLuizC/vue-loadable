@@ -1,20 +1,20 @@
 import Vue from 'vue';
 
-export type LoadableInstance = Vue & LoadableState & LoadableMethods;
+export type LoadableMixinInstance = Vue & LoadableMixinState & LoadableMixinMethods;
 
-export type LoadableState = {
+export type LoadableMixinState = {
   LOADING_STATES: Record<string, number>;
 };
 
-export type LoadableMethods = {
-  $isLoading (this: LoadableInstance, state?: string): boolean;
-  $isLoadingAny (this: LoadableInstance): boolean;
-  $_SET_LOADING (this: LoadableInstance, state: string): void;
-  $_UNSET_LOADING (this: LoadableInstance, state: string): void;
+export type LoadableMixinMethods = {
+  $isLoading (this: LoadableMixinInstance, state?: string): boolean;
+  $isLoadingAny (this: LoadableMixinInstance): boolean;
+  $_SET_LOADING (this: LoadableMixinInstance, state: string): void;
+  $_UNSET_LOADING (this: LoadableMixinInstance, state: string): void;
 };
 
-const Loadable = Vue.extend({
-  data (): LoadableState {
+const LoadableMixin = Vue.extend({
+  data (): LoadableMixinState {
     return {
       LOADING_STATES: Object.create(null)
     };
@@ -38,7 +38,7 @@ const Loadable = Vue.extend({
       const value = this.LOADING_STATES[state];
       this.$set(this.LOADING_STATES, state, value ? value - 1 : 0);
     }
-  } as LoadableMethods
+  } as LoadableMixinMethods
 });
 
-export default Loadable;
+export default LoadableMixin;

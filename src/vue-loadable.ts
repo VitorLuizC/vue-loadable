@@ -1,6 +1,6 @@
-import Vue, { VueConstructor } from 'vue';
+import { VueConstructor } from 'vue';
 import callWithHooks from './callWithHooks';
-import Loadable, { LoadableInstance } from './Loadable';
+import LoadableMixin, { LoadableMixinInstance } from './LoadableMixin';
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -9,16 +9,18 @@ declare module 'vue/types/vue' {
   }
 }
 
+export { LoadableMixin };
+
 export default {
   install (Vue: VueConstructor) {
-    Vue.mixin(Loadable);
+    Vue.mixin(LoadableMixin);
   }
 };
 
 export function loadable <Return, Params extends any[]> (
-  λ: (this: LoadableInstance, ...params: Params) => Return | Promise<Return>,
+  λ: (this: LoadableMixinInstance, ...params: Params) => Return | Promise<Return>,
   state: string = 'generic',
-): (this: LoadableInstance, ...params: Params) => Promise<Return> {
+): (this: LoadableMixinInstance, ...params: Params) => Promise<Return> {
   return function () {
     const params = arguments as unknown as Params;
 
