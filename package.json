@@ -10,7 +10,8 @@
   "jsdelivr": "dist/vue-loadable.umd.js",
   "umd:main": "dist/vue-loadable.umd.js",
   "scripts": {
-    "build": "bili"
+    "build": "bili",
+    "serve": "poi --serve example/main.js"
   },
   "repository": {
     "type": "git",
@@ -35,8 +36,10 @@
   "homepage": "https://github.com/VitorLuizC/vue-loadable#readme",
   "devDependencies": {
     "bili": "^4.1.0",
+    "poi": "^12.5.5",
     "rollup-plugin-typescript2": "^0.19.2",
     "typescript": "^3.2.4",
-    "vue": "^2.5.22"
+    "vue": "^2.5.22",
+    "vue-template-compiler": "^2.5.22"
   }
 }
