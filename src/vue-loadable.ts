@@ -12,6 +12,8 @@ export { LoadableMixin };
 
 export { default as loadable } from './loadable';
 
+export { default as mapLoadableActions } from './mapLoadableActions';
+
 export default {
   install (Vue: VueConstructor) {
     Vue.mixin(LoadableMixin);
