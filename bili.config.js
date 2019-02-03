@@ -5,7 +5,7 @@
 module.exports = {
   input: 'src/vue-loadable.ts',
   banner: true,
-  externals: ['vue'],
+  externals: ['vue', 'vuex'],
   output: {
     format: ['es', 'cjs', 'umd', 'umd-min'],
     moduleName: 'VueLoadable'
