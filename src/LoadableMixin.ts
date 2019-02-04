@@ -32,7 +32,7 @@ const LoadableMixin = Vue.extend({
     };
   },
   methods: {
-    $isLoading (state = 'generic') {
+    $isLoading (state = 'unknown') {
       const value = this.LOADING_STATES[state];
       return !!value && value > 0;
     },

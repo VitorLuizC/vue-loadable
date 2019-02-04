@@ -18,7 +18,7 @@ import { LoadableMixinInstance } from './LoadableMixin';
  */
 export default function loadable <Return, Params extends any[]> (
   λ: (this: LoadableMixinInstance, ...params: Params) => Return | Promise<Return>,
-  state: string = 'generic',
+  state: string = 'unknown',
 ): (this: LoadableMixinInstance, ...params: Params) => Promise<Return> {
   return function () {
     const params = arguments as unknown as Params;
