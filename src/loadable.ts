@@ -23,11 +23,11 @@ export default function loadable <Return, Params extends any[]> (
   return function () {
     const params = arguments as unknown as Params;
 
-    this.$_SET_LOADING(state);
+    this.$setLoading(state);
 
     return callWithHooks(
       () => λ.apply(this, params),
-      () => this.$_UNSET_LOADING(state),
+      () => this.$unsetLoading(state)
     );
   };
 }
