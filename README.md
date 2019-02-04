@@ -126,7 +126,6 @@ export default {
   > }
   >
   > export default {
-  >   ...,
   >   methods: {
   >     // Returns a function with same signature, but handling loading states.
   >     confirm: loadable(confirmUsername, 'confirmation')
