@@ -4,6 +4,8 @@ declare module 'vue/types/vue' {
     interface Vue {
         $isLoading(state?: string): boolean;
         $isLoadingAny(): boolean;
+        $setLoading(state?: string): void;
+        $unsetLoading(state?: string): void;
     }
 }
 export { LoadableMixin };
