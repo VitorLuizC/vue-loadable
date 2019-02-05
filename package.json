@@ -11,7 +11,9 @@
   "umd:main": "dist/vue-loadable.umd.js",
   "scripts": {
     "build": "bili",
-    "serve": "poi --serve example/main.js"
+    "test": "ava",
+    "serve": "poi --serve example/main.js",
+    "prepare": "yarn test && yarn build"
   },
   "repository": {
     "type": "git",
@@ -35,12 +37,19 @@
   },
   "homepage": "https://github.com/VitorLuizC/vue-loadable#readme",
   "devDependencies": {
+    "ava": "^1.2.1",
     "bili": "^4.1.0",
     "poi": "^12.5.5",
     "rollup-plugin-typescript2": "^0.19.2",
+    "ts-node": "^8.0.2",
     "typescript": "^3.2.4",
     "vue": "^2.5.22",
     "vue-template-compiler": "^2.5.22",
     "vuex": "^3.1.0"
+  },
+  "ava": {
+    "require": ["ts-node/register"],
+    "extensions": ["ts"],
+    "compileEnhancements": false
   }
 }
