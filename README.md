@@ -154,6 +154,129 @@ export default {
   ```
   </details>
 
+- **`mapLoadableActions`** map Vuex actions into Vue component's methods to trigger loading states.
+
+  > It uses method's names as loading state name.
+
+  ```vue
+  <template>
+    <div v-if="$isLoading('signInUser')">
+      Carregando...
+    </div>
+    <div v-else>
+      <SignedUserArea />
+    </div>
+  </template>
+
+  <script>
+  import { mapLoadableActions } from 'vue-loadable';
+
+  export default {
+    methods: mapLoadableActions([
+      'signInUser',
+      'signUpUser'
+    ])
+  };
+  ```
+
+  > It supports Vuex module namespaces too.
+  > ```js
+  > Vue.component('SignInForm', {
+  >   methods: mapLoadableActions('user', [
+  >     'signIn',
+  >     'signUp'
+  >   ])
+  > });
+  ```
+
+- **`$isLoading`** is a method to check if a state is loading.
+
+  ```vue
+  <template>
+    <v-spinner v-if="$isLoading('initialize')" />
+    <sign-in-form v-else @click="onClickSignIn" ... />
+  </template>
+
+  <script>
+  // ...
+
+  export default {
+    methods: {
+      ...,
+      onClickSignIn () {
+        if (!this.$isLoading('signIn')) // Call `signIn` only if its not loading.
+          return;
+
+        this.signIn();
+      }
+    }
+  };
+  ```
+
+- **`$isLoadingAny`** is a method to check if any state is loading.
+
+  ```vue
+  <template>
+    <v-spinner v-if="$isLoadingAny()" />
+    <div>
+      <sign-in-or-sign-up-form @signIn="onSignIn" @signUp="onSignUp" />
+    </div>
+  </template>
+
+  <script>
+  // ...
+
+  export default {
+    methods: {
+      ...,
+      onSignUp () {
+        if (!this.$isLoadingAny())
+          return;
+
+        this.signUp();
+      },
+      onSignIn () {
+        if (!this.$isLoadingAny())
+          return;
+
+        this.signIn();
+      }
+    }
+  };
+  ```
+  
+- **`$setLoading`** is a method to set state as loading.
+
+  ```js
+  export default {
+    methods: {
+      ...,
+      async onSubmit () {
+        this.$setLoading('submission'); // set submission state as loading.
+
+        await services.submit(this.fields);
+      }
+    }
+  };
+  ```
+
+- **`$unsetLoading`** is a method to unset state as loading.
+
+  ```js
+  export default {
+    methods: {
+      ...,
+      async onSubmit () {
+        try {
+          await services.submit(this.fields);
+        } catch {}
+
+        this.$unsetLoading('submission'); // unset submission state as loading.
+      }
+    }
+  };
+  ```
+
 ## License
 
 Released under [MIT License](./LICENSE).
