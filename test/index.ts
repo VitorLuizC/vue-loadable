@@ -1,8 +1,35 @@
 import test from 'ava';
-import Loadable from '../src/vue-loadable';
+import Loadable, { install, LoadableMixin, loadable } from '../src/vue-loadable';
+
+// ..:: API Tests ::..
 
 test('API: it default exports an object with install function', (context) => {
   context.truthy(Loadable);
   context.is(typeof Loadable, 'object');
   context.is(typeof Loadable.install, 'function');
+});
+
+test('API: it named export install function, same as Loadable one', (context) => {
+  context.is(typeof install, 'function');
+  context.is(install, Loadable.install);
+});
+
+test('API: it named export LoadableMixin', (context) => {
+  context.truthy(LoadableMixin);
+
+  const methods = (LoadableMixin as any).options.methods;
+
+  context.is(typeof methods.$isLoading, 'function');
+  context.is(typeof methods.$isLoadingAny, 'function');
+  context.is(typeof methods.$setLoading, 'function');
+  context.is(typeof methods.$unsetLoading, 'function');
+
+  const state = (LoadableMixin as any).options.data();
+
+  context.truthy(state.LOADING_STATES);
+  context.is(typeof state.LOADING_STATES, 'object');
+});
+
+test('API: it named export loadable decorator', (context) => {
+  context.is(typeof loadable, 'function');
 });
