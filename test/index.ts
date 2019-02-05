@@ -2,7 +2,7 @@ import Vue from 'vue';
 import test from 'ava';
 import Loadable, { install, LoadableMixin, loadable } from '../src/vue-loadable';
 
-// ..:: API Tests ::..
+// ..:: API tests ::..
 
 test('API: it default exports an object with install function', (context) => {
   context.truthy(Loadable);
@@ -128,8 +128,8 @@ test('Loadable: $unsetLoading unset state as loading', (context) => {
   context.false(SignInForm.$isLoadingAny());
 });
 
-test('Loadable: $isLoadingAny checks if any state is loading', (context) => {
-  const SignInForm = new (
+test('Loadable: $set/unsetLoading are accumulative', (context) => {
+  const Component = new (
     LoadableMixin.extend({
       methods: {
         x () {
@@ -146,25 +146,114 @@ test('Loadable: $isLoadingAny checks if any state is loading', (context) => {
     })
   );
 
-  context.false(SignInForm.$isLoading('x'));
-  context.false(SignInForm.$isLoading('y'));
-  context.false(SignInForm.$isLoadingAny());
+  context.false(Component.$isLoading('state'));
 
-  SignInForm.x();
+  Component.$setLoading('state');
+  Component.$setLoading('state');
 
-  context.true(SignInForm.$isLoading('x'));
-  context.false(SignInForm.$isLoading('y'));
-  context.true(SignInForm.$isLoadingAny());
+  context.true(Component.$isLoading('state'));
 
-  SignInForm.y();
+  Component.$unsetLoading('state');
 
-  context.false(SignInForm.$isLoading('x'));
-  context.true(SignInForm.$isLoading('y'));
-  context.true(SignInForm.$isLoadingAny());
+  context.true(Component.$isLoading('state'));
 
-  SignInForm.z();
+  Component.$unsetLoading('state');
 
-  context.false(SignInForm.$isLoading('x'));
-  context.false(SignInForm.$isLoading('y'));
-  context.false(SignInForm.$isLoadingAny());
+  context.false(Component.$isLoadingAny());
+});
+
+test('Loadable: $isLoadingAny checks if any state is loading', (context) => {
+  const Component = new (
+    LoadableMixin.extend({
+      methods: {
+        x () {
+          this.$setLoading('x');
+        },
+        y () {
+          this.$unsetLoading('x');
+          this.$setLoading('y');
+        },
+        z () {
+          this.$unsetLoading('y');
+        }
+      }
+    })
+  );
+
+  context.false(Component.$isLoading('x'));
+  context.false(Component.$isLoading('y'));
+  context.false(Component.$isLoadingAny());
+
+  Component.x();
+
+  context.true(Component.$isLoading('x'));
+  context.false(Component.$isLoading('y'));
+  context.true(Component.$isLoadingAny());
+
+  Component.y();
+
+  context.false(Component.$isLoading('x'));
+  context.true(Component.$isLoading('y'));
+  context.true(Component.$isLoadingAny());
+
+  Component.z();
+
+  context.false(Component.$isLoading('x'));
+  context.false(Component.$isLoading('y'));
+  context.false(Component.$isLoadingAny());
+});
+
+// ..:: `loadable` decorator tests ::..
+
+test('Decorator: preserve function arguments and return', async (context) => {
+  const getParams = loadable(async function (...args: any[]) {
+    return Array.from(arguments);
+  }, 'arguments');
+
+  const Component = new (
+    LoadableMixin.extend({
+      methods: {
+        getParams
+      }
+    })
+  );
+
+  const params = ['Vitor', 22, 'Samanta', 1.66, false, [1,2,3]];
+
+  context.deepEqual(params, await Component.getParams(...params));
+});
+
+test('Decorator: set loading on init and unset on resolve or reject', async (context) => {
+  const Component = new (
+    LoadableMixin.extend({
+      methods: {
+        x: loadable(async function (...args: any[]) {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          return 1;
+        }, 'x'),
+        y: loadable(async function (...args: any[]) {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          throw new Error('Y');
+        }, 'y')
+      }
+    })
+  );
+
+  context.false(Component.$isLoading('x'));
+
+  const promiseX = Component.x();
+
+  context.true(Component.$isLoading('x'));
+
+  context.is(await promiseX, 1);
+  context.false(Component.$isLoading('x'));
+
+  context.false(Component.$isLoading('y'));
+
+  const promiseY = Component.y();
+
+  context.true(Component.$isLoading('y'));
+
+  await context.throwsAsync(() => promiseY, Error, 'Y');
+  context.false(Component.$isLoading('y'));
 });
