@@ -187,7 +187,21 @@ export default {
   >     'signUp'
   >   ])
   > });
+  > ```
+
+  <details>
+    <summary>TypeScript type definitions.</summary>
+
+  <br />
+
+  ```ts
+  import { mapActions } from 'vuex';
+
+  declare const mapLoadableActions: typeof mapActions;
+
+  export default mapLoadableActions;
   ```
+  </details>
 
 - **`$isLoading`** is a method to check if a state is loading.
 
@@ -212,6 +226,18 @@ export default {
     }
   };
   ```
+
+  <details>
+    <summary>TypeScript type definitions.</summary>
+
+  <br />
+
+  ```ts
+  interface Vue {
+    $isLoading(state?: string): boolean;
+  }
+  ```
+  </details>
 
 - **`$isLoadingAny`** is a method to check if any state is loading.
 
@@ -245,6 +271,18 @@ export default {
   };
   ```
   
+  <details>
+    <summary>TypeScript type definitions.</summary>
+
+  <br />
+
+  ```ts
+  interface Vue {
+    $isLoadingAny(): boolean;
+  }
+  ```
+  </details>
+  
 - **`$setLoading`** is a method to set state as loading.
 
   ```js
@@ -259,6 +297,18 @@ export default {
     }
   };
   ```
+  
+  <details>
+    <summary>TypeScript type definitions.</summary>
+
+  <br />
+
+  ```ts
+  interface Vue {
+    $setLoading(state?: string): void;
+  }
+  ```
+  </details>
 
 - **`$unsetLoading`** is a method to unset state as loading.
 
@@ -276,6 +326,18 @@ export default {
     }
   };
   ```
+
+  <details>
+    <summary>TypeScript type definitions.</summary>
+
+  <br />
+
+  ```ts
+  interface Vue {
+    $unsetLoading(state?: string): void;
+  }
+  ```
+  </details>
 
 ## License
 
