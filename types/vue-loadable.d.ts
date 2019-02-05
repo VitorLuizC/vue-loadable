@@ -2,9 +2,24 @@ import { VueConstructor } from 'vue';
 import LoadableMixin from './LoadableMixin';
 declare module 'vue/types/vue' {
     interface Vue {
+        /**
+         * Check if a state is loading.
+         * @param [state] - Loading state name.
+         */
         $isLoading(state?: string): boolean;
+        /**
+         * Check if any state is loading.
+         */
         $isLoadingAny(): boolean;
+        /**
+         * Set state as loading.
+         * @param [state] - Loading state name.
+         */
         $setLoading(state?: string): void;
+        /**
+         * Unset state as loading.
+         * @param [state] - Loading state name.
+         */
         $unsetLoading(state?: string): void;
     }
 }
