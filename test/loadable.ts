@@ -5,9 +5,9 @@ test('loadable: preserve function arguments and returned value, but in a promise
   const Component = new (
     LoadableMixin.extend({
       methods: {
-        getParams: loadable((...args: any[]) => { // The function arguments are
-          return Array.from(arguments);           // preserved, but it uses a
-        }, 'arguments')                           // Promise wrapping return.
+        // The function arguments are preserved, but returned value is wrapped
+        // in a Promise.
+        getParams: loadable((...args: any[]) => args, 'arguments')
       }
     })
   );
