@@ -29,10 +29,12 @@ export default {
       this.y()
     }, 'x'),
 
-    y: loadable(function () {
-      return sleep(4 * 1000)
-        .then(() => this.z())
-    }, 'y'),
+    async y () {
+      this.$setLoading('y')
+      await sleep(4 * 1000)
+      this.$unsetLoading('y')
+      this.z()
+    },
 
     z: loadable(() => sleep(3 * 1000), 'z')
   },
