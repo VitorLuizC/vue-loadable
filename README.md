@@ -1,4 +1,5 @@
 # `vue-loadable`
+[![Build Status](https://travis-ci.org/VitorLuizC/vue-loadable.svg?branch=master)](https://travis-ci.org/VitorLuizC/vue-loadable)
 [![License](https://badgen.net/github/license/VitorLuizC/vue-loadable)](./LICENSE)
 [![Library minified size](https://badgen.net/bundlephobia/min/vue-loadable)](https://bundlephobia.com/result?p=vue-loadable)
 [![Library minified + gzipped size](https://badgen.net/bundlephobia/minzip/vue-loadable)](https://bundlephobia.com/result?p=vue-loadable)
@@ -270,7 +271,7 @@ export default {
     }
   };
   ```
-  
+
   <details>
     <summary>TypeScript type definitions.</summary>
 
@@ -282,7 +283,7 @@ export default {
   }
   ```
   </details>
-  
+
 - **`$setLoading`** is a method to set state as loading.
 
   ```js
@@ -297,7 +298,7 @@ export default {
     }
   };
   ```
-  
+
   <details>
     <summary>TypeScript type definitions.</summary>
 
