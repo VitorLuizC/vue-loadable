@@ -4,6 +4,51 @@
 [![Library minified size](https://badgen.net/bundlephobia/min/vue-loadable)](https://bundlephobia.com/result?p=vue-loadable)
 [![Library minified + gzipped size](https://badgen.net/bundlephobia/minzip/vue-loadable)](https://bundlephobia.com/result?p=vue-loadable)
 
+`vue-loadable` can improve your loading state control by providing methods and helpers to manage it.
+
+```html
+<template>
+  <p v-if="$isLoading('initialize')">Initializing...</p>
+  <div v-else>
+    <!-- Loaded content... -->
+  </div>
+</template>
+
+<script>
+import { loadable, mapLoadableActions } from 'vue-loadable';
+
+export default {
+  ...,
+
+  methods: {
+    async initialize () {
+      // Set initialize state as loading on async function start.
+      this.$setLoading('initialize');
+
+      try {
+        await this.$store.dispatch('users/fetchUsers');
+      } catch (_) {}
+
+      // Unset initialize state as loading on async function end.
+      this.$unsetLoading('initialize');
+    },
+
+    // `loadable` decorator can automate this process.
+    initialize: loadable(async function () {
+      await this.$store.dispatch('users/fetchUsers');
+    }, 'initialize'),
+
+    // An there's `mapLoadableActions` to map Vuex actions into loadable methods.
+    ...mapLoadableActions('users', {
+      initialize: 'fetchUsers'
+    })
+  },
+  mounted () {
+    this.initialize();
+  }
+};
+```
+
 ## Installation
 
 This library is published in the NPM registry and can be installed using any compatible package manager.
@@ -56,44 +101,11 @@ export default {
 </script>
 ```
 
-## Usage
-
-`vue-loadable` can improve your loading state control by providing pretty simple methods and helpers to automate its usage.
-
-```vue
-<template>
-  <p v-if="$isLoading('initialize')">Initializing...</p>
-  <div v-else>
-    <user-list :users="users" />
-  </div>
-</template>
-
-<script>
-import { loadable } from 'vue-loadable';
-
-// ...
-
-export default {
-  data () {
-    return {
-      users: []
-    };
-  },
-  methods: {
-    fetch: loadable(async function () {
-      const response = await fetch(baseURL + '/users');
-      this.users = await response.json();
-    }, 'initialize')
-  },
-  mounted () {
-    this.initialize();
-  }
-};
-```
-
 ## API
 
-- **`loadable`** decorates a function to change loading state during its execution. It set state as loading when function init and unset on throws an error, on resolve or return a value.
+- **`loadable`** decorates a function to change loading state during its execution. It sets the state as loading when function inits and unsets when it throws an error, when it resolves or when it returns a value.
+
+  > Second argument is the loading state name, is `"unknown"` when it's not defined.
 
   ```js
   Vue.component('SignInForm', {
@@ -120,7 +132,7 @@ export default {
   });
   ```
 
-  > It pass down the function arguments, reject the errors and resolve returned value.
+  > It passes down the function arguments, rejects the errors and resolves the returned value.
   > ```ts
   > async function confirmUsername(username: string): Promise<boolean> {
   >   // ...
@@ -206,6 +218,8 @@ export default {
 
 - **`$isLoading`** is a method to check if a state is loading.
 
+  > Argument is the loading state name, is `"unknown"` when it's not defined.
+
   ```vue
   <template>
     <v-spinner v-if="$isLoading('initialize')" />
@@ -286,6 +300,8 @@ export default {
 
 - **`$setLoading`** is a method to set state as loading.
 
+  > Argument is the loading state name, is `"unknown"` when it's not defined.
+
   ```js
   export default {
     methods: {
@@ -312,6 +328,8 @@ export default {
   </details>
 
 - **`$unsetLoading`** is a method to unset state as loading.
+
+  > Argument is the loading state name, is `"unknown"` when it's not defined.
 
   ```js
   export default {
