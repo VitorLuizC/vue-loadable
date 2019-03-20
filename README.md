@@ -3,6 +3,7 @@
 [![License](https://badgen.net/github/license/VitorLuizC/vue-loadable)](./LICENSE)
 [![Library minified size](https://badgen.net/bundlephobia/min/vue-loadable)](https://bundlephobia.com/result?p=vue-loadable)
 [![Library minified + gzipped size](https://badgen.net/bundlephobia/minzip/vue-loadable)](https://bundlephobia.com/result?p=vue-loadable)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVitorLuizC%2Fvue-loadable.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FVitorLuizC%2Fvue-loadable?ref=badge_shield)
 
 `vue-loadable` can improve your loading state control by providing methods and helpers to manage it.
 
@@ -361,3 +362,6 @@ export default {
 ## License
 
 Released under [MIT License](./LICENSE).
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVitorLuizC%2Fvue-loadable.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FVitorLuizC%2Fvue-loadable?ref=badge_large)
