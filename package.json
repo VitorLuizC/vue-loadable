@@ -6,7 +6,7 @@
   "types": "types/vue-loadable.d.ts",
   "main": "dist/vue-loadable.js",
   "unpkg": "dist/vue-loadable.umd.js",
-  "module": "dist/vue-loadable.mjs",
+  "module": "dist/vue-loadable.esm.js",
   "jsdelivr": "dist/vue-loadable.umd.js",
   "umd:main": "dist/vue-loadable.umd.js",
   "files": [
@@ -41,15 +41,15 @@
   },
   "homepage": "https://github.com/VitorLuizC/vue-loadable#readme",
   "devDependencies": {
-    "ava": "^1.2.1",
-    "bili": "^4.2.5",
-    "poi": "^12.5.5",
-    "rollup-plugin-typescript2": "^0.19.2",
-    "ts-node": "^8.0.2",
-    "typescript": "^3.3.1",
-    "vue": "^2.6.2",
-    "vue-template-compiler": "^2.6.2",
-    "vuex": "^3.1.0"
+    "ava": "^2.4.0",
+    "bili": "^4.8.1",
+    "poi": "^12.7.3",
+    "rollup-plugin-typescript2": "^0.24.3",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4",
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10",
+    "vuex": "^3.1.1"
   },
   "ava": {
     "require": [
