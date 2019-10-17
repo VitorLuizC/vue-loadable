@@ -1,5 +1,5 @@
+import Vue from 'vue';
 import callWithHooks from './callWithHooks';
-import { LoadableMixinInstance } from './LoadableMixin';
 
 /**
  * An union of any function and functions that have access to `this`
@@ -7,19 +7,18 @@ import { LoadableMixinInstance } from './LoadableMixin';
  */
 export type Method =
   | ((...args: any[]) => any)
-  | ((this: LoadableMixinInstance, ...args: any[]) => any);
+  | ((this: Vue, ...args: any[]) => any);
 
 /**
  * A Higher-order type to trasnform a method into loadable method that have
  * access to `this` (Vue instance) and returns a Promise.
  */
-export type LoadableMethod <T extends Method> = (
-  this: LoadableMixinInstance,
+export type LoadableMethod<T extends Method> = (
+  this: Vue,
   ...args: Parameters<T>
-) =>
-  ReturnType<T> extends Promise<any>
-    ? ReturnType<T>
-    : Promise<ReturnType<T>>;
+) => ReturnType<T> extends Promise<any>
+  ? ReturnType<T>
+  : Promise<ReturnType<T>>;
 
 /**
  * Decorate a method to causes loading states changes during its execution. It
@@ -36,13 +35,13 @@ export type LoadableMethod <T extends Method> = (
  * @param method - A method, commonly async, which causes loading state changes.
  * @param [state] - Loading state name. It's "unknown" if not defined.
  */
-const loadable = <T extends Method> (method: T, state: string = 'unknown') =>
-  function () {
+const loadable = <T extends Method>(method: T, state: string = 'unknown') =>
+  function() {
     this.$setLoading(state);
 
     return callWithHooks(
       () => method.apply(this, arguments as any),
-      () => this.$unsetLoading(state)
+      () => this.$unsetLoading(state),
     );
   } as LoadableMethod<T>;
 

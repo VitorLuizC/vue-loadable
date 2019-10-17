@@ -7,24 +7,24 @@ declare module 'vue/types/vue' {
      * Check if a state is loading.
      * @param [state] - Loading state name.
      */
-    $isLoading (state?: string): boolean;
+    $isLoading(state?: string): boolean;
 
     /**
      * Check if any state is loading.
      */
-    $isLoadingAny (): boolean;
+    $isLoadingAny(): boolean;
 
     /**
      * Set state as loading.
      * @param [state] - Loading state name.
      */
-    $setLoading (state?: string): void;
+    $setLoading(state?: string): void;
 
     /**
      * Unset state as loading.
      * @param [state] - Loading state name.
      */
-    $unsetLoading (state?: string): void;
+    $unsetLoading(state?: string): void;
   }
 }
 
@@ -35,7 +35,7 @@ export { default as loadable, Method, LoadableMethod } from './loadable';
 export {
   default as mapLoadableMethods,
   Methods,
-  LoadableMethods
+  LoadableMethods,
 } from './mapLoadableMethods';
 
 /**
@@ -44,7 +44,7 @@ export {
  * Vue.use(install)```
  * @param Vue - The Vue constructor.
  */
-export function install (Vue: VueConstructor): void {
+export function install(Vue: VueConstructor): void {
   Vue.mixin(LoadableMixin);
 }
 

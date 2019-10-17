@@ -9,7 +9,7 @@ export type Methods = Record<string, Method>;
  * A Higher-order type to transform methods into loadable methods. It keeps keys
  * as-is, but values have access to `this` (Vue instance) and returns a Promise.
  */
-export type LoadableMethods <T extends Methods> = {
+export type LoadableMethods<T extends Methods> = {
   [K in keyof T]: LoadableMethod<T[K]>;
 };
 
@@ -35,8 +35,8 @@ export type LoadableMethods <T extends Methods> = {
  *   }
  * });
  */
-const mapLoadableMethods = <T extends Methods> (
-  methods: T
+const mapLoadableMethods = <T extends Methods>(
+  methods: T,
 ): LoadableMethods<T> => {
   const names = Object.keys(methods) as (string & keyof T)[];
 
@@ -45,7 +45,7 @@ const mapLoadableMethods = <T extends Methods> (
       loadableMethods[name] = loadable(methods[name], name);
       return loadableMethods;
     },
-    Object.create(null) as LoadableMethods<T>
+    Object.create(null) as LoadableMethods<T>,
   );
 };
 
