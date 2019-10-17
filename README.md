@@ -83,7 +83,7 @@ This module has an UMD bundle available through JSDelivr and Unpkg CDNs.
 
 ## Installation on Vue
 
-`vue-loadable` need to be installed to enable loadable methods, `loadable` decorator and `mapLoadableActions` helper.
+`vue-loadable` need to be installed to enable loadable methods, `loadable` decorator and `mapLoadableMethods` helper.
 
 To install globally, just pass default exported object as argment to `Vue.use`.
 
@@ -166,18 +166,16 @@ export default {
   <br />
 
   ```ts
-  type Method = 
+  type Method =
     | ((...args: any[]) => any)
     | ((this: Vue, ...args: any[]) => any);
 
   type LoadableMethod<T extends Method> = (
     this: Vue,
-    ...args: Parameters<T>,
-  ) => (
-    ReturnType<T> extends Promise<any>
-      ? ReturnType<T>
-      : Promise<ReturnType<T>>
-  );
+    ...args: Parameters<T>
+  ) => ReturnType<T> extends Promise<any>
+    ? ReturnType<T>
+    : Promise<ReturnType<T>>;
 
   const loadable: <T extends Method>(
     method: T,
