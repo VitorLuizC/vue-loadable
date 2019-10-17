@@ -5,7 +5,7 @@
 [![Library minified + gzipped size](https://badgen.net/bundlephobia/minzip/vue-loadable)](https://bundlephobia.com/result?p=vue-loadable)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVitorLuizC%2Fvue-loadable.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FVitorLuizC%2Fvue-loadable?ref=badge_shield)
 
-`vue-loadable` can improve your loading state control by providing methods and helpers to manage it.
+`vue-loadable` improves your loading state flow by providing methods and helpers to manage it.
 
 ```html
 <template>

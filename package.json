@@ -1,7 +1,7 @@
 {
   "name": "vue-loadable",
   "version": "0.1.1",
-  "description": "Adds loading state when running load method / param.",
+  "description": "Improves your loading state flow by providing methods and helpers to manage it.",
   "cdn": "dist/vue-loadable.umd.js",
   "types": "types/vue-loadable.d.ts",
   "main": "dist/vue-loadable.js",
