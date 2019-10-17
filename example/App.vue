@@ -15,14 +15,17 @@
 </template>
 
 <script>
-import { loadable, mapLoadableActions } from '../src/vue-loadable'
+import { mapActions } from 'vuex';
+import { loadable, mapLoadableMethods } from '../src/vue-loadable'
 
 const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time))
 
 export default {
   name: 'App',
   methods: {
-    ...mapLoadableActions(['w']),
+    ...mapLoadableMethods(
+      mapActions(['w'])
+    ),
 
     x: loadable(async function () {
       await sleep(3 * 1000)
