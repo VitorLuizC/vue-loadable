@@ -5,16 +5,16 @@
 module.exports = {
   input: 'src/vue-loadable.ts',
   banner: true,
-  externals: ['vue', 'vuex'],
+  externals: ['vue'],
   output: {
     format: ['es', 'cjs', 'umd', 'umd-min'],
-    moduleName: 'VueLoadable'
+    moduleName: 'VueLoadable',
   },
   plugins: {
-    'typescript2': {
+    typescript2: {
       clean: true,
       verbosity: 0,
       useTsconfigDeclarationDir: true,
-    }
-  }
+    },
+  },
 };
