@@ -5,4 +5,5 @@
  * @param onDone
  * @param onError
  */
-export default function callWithHooks<T>(call: () => T | Promise<T>, onDone: () => void, onError?: () => void): Promise<T>;
+declare const callWithHooks: <T>(call: () => T | Promise<T>, onDone: () => void, onError?: () => void) => Promise<T>;
+export default callWithHooks;

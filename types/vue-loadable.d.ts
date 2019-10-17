@@ -25,7 +25,7 @@ declare module 'vue/types/vue' {
 }
 export { LoadableMixin };
 export { default as loadable, Method, LoadableMethod } from './loadable';
-export { default as mapLoadableMethods, Methods, LoadableMethods } from './mapLoadableMethods';
+export { default as mapLoadableMethods, Methods, LoadableMethods, } from './mapLoadableMethods';
 /**
  * Installs LoadableMixin globally.
  * @example ```js

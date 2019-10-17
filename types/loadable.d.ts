@@ -1,14 +1,14 @@
-import { LoadableMixinInstance } from './LoadableMixin';
+import Vue from 'vue';
 /**
  * An union of any function and functions that have access to `this`
  * (Vue instance).
  */
-export declare type Method = ((...args: any[]) => any) | ((this: LoadableMixinInstance, ...args: any[]) => any);
+export declare type Method = ((...args: any[]) => any) | ((this: Vue, ...args: any[]) => any);
 /**
  * A Higher-order type to trasnform a method into loadable method that have
  * access to `this` (Vue instance) and returns a Promise.
  */
-export declare type LoadableMethod<T extends Method> = (this: LoadableMixinInstance, ...args: Parameters<T>) => ReturnType<T> extends Promise<any> ? ReturnType<T> : Promise<ReturnType<T>>;
+export declare type LoadableMethod<T extends Method> = (this: Vue, ...args: Parameters<T>) => ReturnType<T> extends Promise<any> ? ReturnType<T> : Promise<ReturnType<T>>;
 /**
  * Decorate a method to causes loading states changes during its execution. It
  * sets state as loading when function is init and unsets on throws an error or
