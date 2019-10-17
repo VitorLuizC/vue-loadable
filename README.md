@@ -1,4 +1,5 @@
 # `vue-loadable`
+
 [![Build Status](https://travis-ci.org/VitorLuizC/vue-loadable.svg?branch=master)](https://travis-ci.org/VitorLuizC/vue-loadable)
 [![License](https://badgen.net/github/license/VitorLuizC/vue-loadable)](./LICENSE)
 [![Library minified size](https://badgen.net/bundlephobia/min/vue-loadable)](https://bundlephobia.com/result?p=vue-loadable)
@@ -16,7 +17,8 @@
 </template>
 
 <script>
-import { loadable, mapLoadableActions } from 'vue-loadable';
+import { mapActions } from 'vuex';
+import { loadable, mapLoadableMethods } from 'vue-loadable';
 
 export default {
   ...,
@@ -39,10 +41,12 @@ export default {
       await this.$store.dispatch('users/fetchUsers');
     }, 'initialize'),
 
-    // An there's `mapLoadableActions` to map Vuex actions into loadable methods.
-    ...mapLoadableActions('users', {
-      initialize: 'fetchUsers'
-    })
+    // An there's `mapLoadableMethods` to map methods into loadable methods (works with Vuex too).
+    ...mapLoadableMethods(
+      mapActions('users', {
+        initialize: 'fetchUsers'
+      })
+    )
   },
   mounted () {
     this.initialize();
@@ -97,7 +101,7 @@ You can install it locally instead with `LoadableMixin` mixin.
 import { LoadableMixin } from 'vue-loadable';
 
 export default {
-  mixins: [ LoadableMixin ]
+  mixins: [LoadableMixin],
 };
 </script>
 ```
@@ -111,12 +115,12 @@ export default {
   ```js
   Vue.component('SignInForm', {
     methods: {
-      signIn: loadable(async function (name) {
+      signIn: loadable(async function(name) {
         // ...
       }, 'signIn'),
     },
 
-    async mounted () {
+    async mounted() {
       this.$isLoading('signIn');
       //=> false
 
@@ -129,11 +133,12 @@ export default {
 
       this.$isLoading('signIn');
       //=> false
-    }
+    },
   });
   ```
 
   > It passes down the function arguments, rejects the errors and resolves the returned value.
+  >
   > ```ts
   > async function confirmUsername(username: string): Promise<boolean> {
   >   // ...
@@ -142,16 +147,16 @@ export default {
   > export default {
   >   methods: {
   >     // Returns a function with same signature, but handling loading states.
-  >     confirm: loadable(confirmUsername, 'confirmation')
+  >     confirm: loadable(confirmUsername, 'confirmation'),
   >   },
-  >   async mounted (): Promise<void> {
+  >   async mounted(): Promise<void> {
   >     try {
   >       const isConfirmed = await this.confirm('VitorLuizC');
   >       this.$router.push(isConfirmed ? '/checkout' : '/confirmation');
   >     } catch (error) {
   >       new Rollbar.Error(error).send();
   >     }
-  >   }
+  >   },
   > };
   > ```
 
@@ -161,14 +166,28 @@ export default {
   <br />
 
   ```ts
-  export default function loadable <Return, Params extends any[]> (
-    λ: (this: Vue & LoadableMixin, ...params: Params) => Return | Promise<Return>,
+  type Method = 
+    | ((...args: any[]) => any)
+    | ((this: Vue, ...args: any[]) => any);
+
+  type LoadableMethod<T extends Method> = (
+    this: Vue,
+    ...args: Parameters<T>,
+  ) => (
+    ReturnType<T> extends Promise<any>
+      ? ReturnType<T>
+      : Promise<ReturnType<T>>
+  );
+
+  const loadable: <T extends Method>(
+    method: T,
     state?: string,
-  ): (this: Vue & LoadableMixin, ...params: Params) => Promise<Return>;
+  ) => LoadableMethod<T>;
   ```
+
   </details>
 
-- **`mapLoadableActions`** map Vuex actions into Vue component's methods to trigger loading states.
+- **`mapLoadableMethods`** maps methods into loadable ones that triggers loading states, it works pretty well with Vuex.
 
   > It uses method's names as loading state name.
 
@@ -183,25 +202,18 @@ export default {
   </template>
 
   <script>
-  import { mapLoadableActions } from 'vue-loadable';
+  import { mapActions } from 'vuex';
+  import { mapLoadableMethods } from 'vue-loadable';
 
   export default {
-    methods: mapLoadableActions([
-      'signInUser',
-      'signUpUser'
-    ])
+    methods: mapLoadableMethods(
+      mapActions([
+        'signInUser',
+        'signUpUser'
+      ])
+    )
   };
   ```
-
-  > It supports Vuex module namespaces too.
-  > ```js
-  > Vue.component('SignInForm', {
-  >   methods: mapLoadableActions('user', [
-  >     'signIn',
-  >     'signUp'
-  >   ])
-  > });
-  > ```
 
   <details>
     <summary>TypeScript type definitions.</summary>
@@ -209,12 +221,19 @@ export default {
   <br />
 
   ```ts
-  import { mapActions } from 'vuex';
+  // `Method` and `LoadableMethod` are defined at `loadable` type definitions.
 
-  declare const mapLoadableActions: typeof mapActions;
+  type Methods = Record<string, Method>;
 
-  export default mapLoadableActions;
+  type LoadableMethods<T extends Methods> = {
+    [K in keyof T]: LoadableMethod<T[K]>;
+  };
+
+  const mapLoadableMethods: <T extends Methods>>(
+    methods: T,
+  ) => LoadableMethods<T>;
   ```
+
   </details>
 
 - **`$isLoading`** is a method to check if a state is loading.
@@ -253,6 +272,7 @@ export default {
     $isLoading(state?: string): boolean;
   }
   ```
+
   </details>
 
 - **`$isLoadingAny`** is a method to check if any state is loading.
@@ -297,6 +317,7 @@ export default {
     $isLoadingAny(): boolean;
   }
   ```
+
   </details>
 
 - **`$setLoading`** is a method to set state as loading.
@@ -326,6 +347,7 @@ export default {
     $setLoading(state?: string): void;
   }
   ```
+
   </details>
 
 - **`$unsetLoading`** is a method to unset state as loading.
@@ -357,11 +379,11 @@ export default {
     $unsetLoading(state?: string): void;
   }
   ```
+
   </details>
 
 ## License
 
 Released under [MIT License](./LICENSE).
-
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVitorLuizC%2Fvue-loadable.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FVitorLuizC%2Fvue-loadable?ref=badge_large)
